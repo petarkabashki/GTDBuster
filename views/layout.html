@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.css" />
+    
+	  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+
+<script src="/js/lib/underscore.js"></script>
+<script src="/js/lib/jquery-1.8.3.js"></script>
+<script src="/js/lib/backbone.js"></script>
+<script src="/js/lib/backbone.marionette.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script data-main="/js/main" src="/js/lib/require.js"></script>
+
+
+<script id='in-basket-item-template' type='text/html'>
+	 <td class='item'>{{subject}}<span class="pull-right">{{duedate}}</span><span class="pull-right">{{estimate}}&nbsp;</span></td>
+</script>
+
+<script id='main-navbar-template' type='text/html'>
+				    <span class="dropdown status">
+					  		<a class="dropdown-toggle btn" data-toggle="dropdown" href="#"><i class='lbl'>Next Action</i> <b class="caret"></b></a>
+				    		<ul class="dropdown-menu">
+						      <li class='in-basket' data-status='in-basket'><a class="" href="#"> In Basket </a></li>
+						      <li class='next-action active' data-status='next-action'><a class="" href="#"> Next Action </a></li>
+						      <li class='incubation' data-status='incubation'><a class="" href="#"> Incubation</a></li>
+						    </ul>
+				    </span>
+					  <a class='btn pull-right new' href="#" >New</a>						  
+</script>
+
+<script id='task-edit-template' type='text/html'>
+		<form>
+			<fieldset>
+				{{#if id}}<legend>#{{id}} - {{subject}}</legend>{{/if}}
+				<label>Subject:</label>
+				<input class='subject' type="text" placeholder="Type something…" value="{{subject}}">
+
+				<label>Due date:</label>
+				<input class='duedate' type="date" value="{{duedate}}">
+			
+				<label>Estimated Time(hours):</label>
+				<input class='estimate' type="time" value="{{estimate}}">
+				
+				<label>Description:</label>
+				<textarea class='description' >{{description}}</textarea>
+				
+				<label>Status:</label>
+					<!--label><input type="radio" class='status' name="status" value="in-basket" {{#ifEq status "in-basket"}}checked{{/ifEq}}> In Basket</label>
+					<label><input type="radio" class='status' name="status" value="next-action" {{#ifEq status "next-action"}}checked{{/ifEq}}> Next Action</label>
+					<label><input type="radio" class='status' name="status" value="incubation" {{#ifEq status "incubation"}}checked{{/ifEq}}> Incubation</label-->
+				<select>
+					<option value='in-basket' {{#ifEq status "in-basket"}}selected{{/ifEq}}>In Basket</option> 
+					<option value='next-action' {{#ifEq status "next-action"}}selected{{/ifEq}}>Next Action</option> 
+					<option value='inclubation' {{#ifEq status "incubation"}}selected{{/ifEq}}>Incubation</option> 
+				</select>
+				
+				<br/>
+				<button class="btn back">Back</button>
+				<button class="btn save">Save</button>
+			</fieldset>
+		</form>
+</script>
+
+ <!-- Application container. -->
+	<div class=''>
+		<div id="navbar" class="navbar navbar-fixed-top" style="z-index: 10;">
+		</div>
+		
+		
+		<div id="content"></div>
+		<footer id="footer"></footer>
+	</div>
+  <!-- Application source. -->
+  
+</body>
+</html>

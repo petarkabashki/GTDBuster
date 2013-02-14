@@ -1,0 +1,25 @@
+.navbar
+{
+	margin-bottom: 0px;
+}
+
+.navbar-inner
+{
+	padding: 0 5px !important;
+}
+
+.issue-list td
+{
+	cursor: pointer;
+}
+.issue-list td:hover
+{
+	background-color: #ddd !important;
+}
+
+#content
+{
+	margin-top: 41px;
+}
+
+/* Put development-only CSS below this line. */
