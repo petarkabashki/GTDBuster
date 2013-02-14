@@ -1,6 +1,6 @@
-define([  
+define([  'backbone'
 ],
-function() {
+function(Backbone) {
 	var Task = Backbone.Model.extend({
 		defaults: {    
 		}

@@ -8,17 +8,11 @@
 </head>
 <body>
 
-
-<script src="/js/lib/underscore.js"></script>
-<script src="/js/lib/jquery-1.8.3.js"></script>
-<script src="/js/lib/backbone.js"></script>
-<script src="/js/lib/backbone.marionette.js"></script>
-<script src="/js/lib/bootstrap.js"></script>
 <script data-main="/js/main" src="/js/lib/require.js"></script>
 
 
 <script id='in-basket-item-template' type='text/html'>
-	 <td class='item'>{{subject}}<span class="pull-right">{{duedate}}</span><span class="pull-right">{{estimate}}&nbsp;</span></td>
+	 <td class='item'>{{subject}}<span class="pull-right">{{duedate}}</span></td>
 </script>
 
 <script id='main-navbar-template' type='text/html'>
@@ -53,7 +47,7 @@
 					<!--label><input type="radio" class='status' name="status" value="in-basket" {{#ifEq status "in-basket"}}checked{{/ifEq}}> In Basket</label>
 					<label><input type="radio" class='status' name="status" value="next-action" {{#ifEq status "next-action"}}checked{{/ifEq}}> Next Action</label>
 					<label><input type="radio" class='status' name="status" value="incubation" {{#ifEq status "incubation"}}checked{{/ifEq}}> Incubation</label-->
-				<select>
+				<select class='status'>
 					<option value='in-basket' {{#ifEq status "in-basket"}}selected{{/ifEq}}>In Basket</option> 
 					<option value='next-action' {{#ifEq status "next-action"}}selected{{/ifEq}}>Next Action</option> 
 					<option value='inclubation' {{#ifEq status "incubation"}}selected{{/ifEq}}>Incubation</option> 

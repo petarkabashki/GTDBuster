@@ -3,7 +3,7 @@ requirejs.config({
     paths : {
         views : 'views',
 				backbone : 'lib/backbone',
-				"backbone.filtercollection-patch": 'lib/backbone.filtercollection-patch',
+				"backbone.filtercollection.patch": 'backbone.filtercollection.patch',
 				underscore : 'lib/underscore',
 				jquery : 'lib/jquery-1.8.3',
 				wreqr : 'lib/backbone.wreqr',   
@@ -25,15 +25,24 @@ requirejs.config({
 		    deps : ['jquery', 'underscore', 'handlebars'],
 		    exports : 'Backbone'
 		  },
+		  bootstrap:{
+		  	deps: ['jquery'],
+		  	exports: 'Bootstrap'
+		  },
 		  marionette : {
-		    deps : ['jquery', 'underscore', 'backbone', 'wreqr','backbone.filtercollection-patch'],
+		    deps : ['jquery', 'underscore', 'backbone', 'wreqr'],
 		    exports : 'Marionette'
+		  },
+		  wreqr: {
+		  	deps: ['backbone']
 		  }
 		}
 });
 
-requirejs(['underscore', 'vent','views', 'model'], function(_, vent, Views, Model) {
+requirejs(['underscore', 'bootstrap', 'vent', 'views', 'model'], function(_, Bootstrap, vent, Views, Model) {
 
+		//alert(1);
+		
 		Handlebars.registerHelper("ifEq", function(attr, val, context) {
 			if (val === attr) {
 				return context.fn();
@@ -71,8 +80,12 @@ requirejs(['underscore', 'vent','views', 'model'], function(_, vent, Views, Mode
     		GTDApp.main.show(editView);   
     	},
     	
-    	saveTask: function(task){
+    	updateTask: function(task){
     		this.listInBasket(task);    		
+    	},
+    
+    	createTask: function(task){
+    		this.allTasks.add(task);    		
     	},
     
     	cancelEditTask: function(task){
@@ -103,7 +116,9 @@ requirejs(['underscore', 'vent','views', 'model'], function(_, vent, Views, Mode
   		
   		this.listenTo(vent, 'task:edit', this.editTask);
   		
-  		this.listenTo(vent, 'task:edit:save', this.saveTask);
+  		this.listenTo(vent, 'task:edit:upate', this.updateTask);
+  		
+  		this.listenTo(vent, 'task:edit:create', this.createTask);
 
   		this.listenTo(vent, 'task:edit:cancel', this.cancelEditTask);  		
   		

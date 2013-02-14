@@ -46,7 +46,9 @@ function(vent, $, Handlebars) {
 			this.model.set('duedate', this.$el.find('.duedate').val());
 			this.model.set('estimate', this.$el.find('.estimate').val());
 			this.model.set('description', this.$el.find('.description').val());
-			this.model.set('status', this.$el.find('.status:checked').val());
+			this.model.set('status', this.$el.find('select.status').val());
+			
+			if(! this.model.get('id')) vent.trigger('task:edit:create', this.model);
 			
 			vent.trigger('list:tasks', status);
 			return false;
