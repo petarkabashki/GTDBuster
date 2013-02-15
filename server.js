@@ -222,6 +222,7 @@ var Task = {
 		if(! _id) 
 		{
 			data._id = uuid.v4();
+			if(Task.data.length > 100) Task.data.pop();
 			Task.data.push(data);
 			fn(null, data);			
 		}
