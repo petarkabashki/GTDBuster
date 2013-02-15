@@ -42,15 +42,21 @@ function(vent, $, Handlebars) {
 		
 		save: function(){
 			var status = this.model.get('status') || 'next-action' ;
-			this.model.set('subject', this.$el.find('.subject').val());
-			this.model.set('duedate', this.$el.find('.duedate').val());
-			this.model.set('estimate', this.$el.find('.estimate').val());
-			this.model.set('description', this.$el.find('.description').val());
-			this.model.set('status', this.$el.find('select.status').val());
 			
-			if(! this.model.get('id')) vent.trigger('task:edit:create', this.model);
+			var attrs = {
+				subject: this.$el.find('.subject').val(),
+				duedate: this.$el.find('.duedate').val(),
+				estimate: this.$el.find('.estimate').val(),
+				description: this.$el.find('.description').val(),
+				status: this.$el.find('select.status').val()
+			};
 			
-			vent.trigger('list:tasks', status);
+			this.model.save(attrs, {
+				success: function() {
+					vent.trigger('list:tasks', status);	
+				}
+			})
+			
 			return false;
 		},
 		
@@ -82,8 +88,7 @@ function(vent, $, Handlebars) {
 					this.selectStatus(status); 
 				
 				});
-		},
-		
+		},		
 		
 		triggerNew: function(){ 
 			vent.trigger("task:edit:new", "in-basket");

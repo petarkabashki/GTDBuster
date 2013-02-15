@@ -40,8 +40,6 @@ requirejs.config({
 });
 
 requirejs(['underscore', 'bootstrap', 'vent', 'views', 'model'], function(_, Bootstrap, vent, Views, Model) {
-
-		//alert(1);
 		
 		Handlebars.registerHelper("ifEq", function(attr, val, context) {
 			if (val === attr) {
@@ -58,14 +56,20 @@ requirejs(['underscore', 'bootstrap', 'vent', 'views', 'model'], function(_, Boo
     	},
     	
     	listTasks: function(status, task){
-    		var filteredTasks = this.allTasks.where({status: status});
-    		var collection = new Model.TaskList(filteredTasks);
+    		var that = this;
+    		
+		    this.allTasks.fetch({
+		      success: function(tasks) {
+						var filteredTasks = that.allTasks.where({status: status});
+						var collection = new Model.TaskList(filteredTasks);
 
-    		var mainView = new Views.TaskListView({ 
-		  			collection: collection
-		  	});
-    		GTDApp.main.show(mainView);  
-    		vent.trigger("navbar:selectstatus", status);
+						var mainView = new Views.TaskListView({ 
+								collection: collection
+						});
+						that.main.show(mainView);  
+						vent.trigger("navbar:selectstatus", status);
+		      }
+		    });    	
     	},
     	    	
     	editTask: function(task){
@@ -83,11 +87,7 @@ requirejs(['underscore', 'bootstrap', 'vent', 'views', 'model'], function(_, Boo
     	updateTask: function(task){
     		this.listInBasket(task);    		
     	},
-    
-    	createTask: function(task){
-    		this.allTasks.add(task);    		
-    	},
-    
+    	
     	cancelEditTask: function(task){
     		this.listInBasket(task);    		
     	}
@@ -100,17 +100,19 @@ requirejs(['underscore', 'bootstrap', 'vent', 'views', 'model'], function(_, Boo
 		});
     // Routes
     GTDApp.addInitializer(function(options) {
+    	var that = this;
+    	/*
     	var taskArray = _.map(_.range(20),function(n){return {id: n, "subject": 'inbasket - task ' + n, status: 'in-basket' }; })
   			.concat(_.map(_.range(20),function(n){return {id: n + 20, "subject": 'next action - task ' + n + 20, status: 'next-action'};}))
   			.concat(_.map(_.range(40),function(n){ return { id: n + 40, "subject": 'incubation - task ' + n + 40, status: 'incubation' };}));
-  			
-  		this.allTasks = new Model.TaskList(taskArray);
+  		*/	
+  		//this.allTasks = new Model.TaskList(taskArray);
+  		
+  		this.allTasks = new Model.TaskList();
 
-      this.showMainNavbar();
-      this.listTasks("next-action");
-      
-      
-			//this.listenTo(vent, 'go:back', this.goBack);
+			that.showMainNavbar();
+			that.listTasks("next-action");
+  		
 			
 			this.listenTo(vent, 'list:tasks', this.listTasks);
   		
@@ -118,8 +120,6 @@ requirejs(['underscore', 'bootstrap', 'vent', 'views', 'model'], function(_, Boo
   		
   		this.listenTo(vent, 'task:edit:upate', this.updateTask);
   		
-  		this.listenTo(vent, 'task:edit:create', this.createTask);
-
   		this.listenTo(vent, 'task:edit:cancel', this.cancelEditTask);  		
   		
   		this.listenTo(vent, 'task:edit:new', this.newTask);
