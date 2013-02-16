@@ -78,43 +78,29 @@ function(vent, $, Handlebars) {
 	var HomeNavbarView = Backbone.Marionette.ItemView.extend({
 		className: "navbar-inner",
 		events: {
-		  "click .in-basket": "triggerListInbasket",
-		  "click .next-action": "triggerNextAction",
-		  "click .incubation": "triggerIncubation",
+		  "change .dropdown.status": "triggerChangeStatus",
 		  "click .btn.new": "triggerNew"
 		},
 		initialize: function(){			
 			this.listenTo(vent, 'navbar:selectstatus',function(status){ 
-					this.selectStatus(status); 
-				
-				});
+					this.selectStatus(status);				
+			});
 		},		
 		
 		triggerNew: function(){ 
 			vent.trigger("task:edit:new", "in-basket");
 		},
 		
-		triggerListInbasket: function(){ 
-			vent.trigger("list:tasks", "in-basket");
+		triggerChangeStatus: function(){ 
+			vent.trigger("list:tasks", this.getCurrentStatus());
 		},
-		
-		triggerNextAction: function(){ 
-			vent.trigger("list:tasks", "next-action");
-		},
-		
-		triggerIncubation: function(){ 
-			vent.trigger("list:tasks", "incubation");
-		},
-		
+				
 		getCurrentStatus: function(){
-			return this.$el.find('.dropdown.status .lbl').attr('data-status');
+			return this.$el.find('.dropdown.status option:selected').val();
 		},
 		
 		selectStatus: function(status){
-			this.$el.find('.dropdown.status ul li').removeClass("active");			
-			this.$el.find('.dropdown.status ul li.' + status).addClass("active");
-			this.$el.find('.dropdown.status .lbl').html(statusMenuMap[status]);
-			this.$el.find('.dropdown.status .lbl').attr('data-status', status);
+			this.$el.find('.dropdown.status').val(status);
 		}
 		
 	});

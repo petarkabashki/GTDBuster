@@ -16,15 +16,12 @@
 </script>
 
 <script id='main-navbar-template' type='text/html'>
-				    <span class="dropdown status">
-					  		<a class="dropdown-toggle btn" data-toggle="dropdown" href="#"><i class='lbl'>Next Action</i> <b class="caret"></b></a>
-				    		<ul class="dropdown-menu">
-						      <li class='in-basket' data-status='in-basket'><a class="" href="#"> In Basket </a></li>
-						      <li class='next-action active' data-status='next-action'><a class="" href="#"> Next Action </a></li>
-						      <li class='incubation' data-status='incubation'><a class="" href="#"> Incubation</a></li>
-						    </ul>
-				    </span>
-					  <a class='btn pull-right new' href="#" >New</a>						  
+	<select class='dropdown status btn'>
+		<option value='in-basket'>In Basket</option>
+		<option value='next-action'>Next Action</option>
+		<option value='incubation'>Incubation</option>
+	</select>
+	<a class='btn pull-right new' href="#" >New</a>						  
 </script>
 
 <script id='task-edit-template' type='text/html'>
